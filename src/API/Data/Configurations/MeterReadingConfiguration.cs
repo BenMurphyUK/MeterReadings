@@ -27,6 +27,11 @@ namespace MeterReadingsApi.Data.Configurations
                 .WithMany(x => x.MeterReadings)
                 .HasForeignKey(x => x.AccountId)
                 .IsRequired();
+
+            // Indexes
+            // Create unique constraint to prevent duplicate readings at datase level
+            builder.HasIndex(x => new { x.AccountId, x.MeterReadingDateTime, x.MeterReadValue })
+                .IsUnique();
         }
     }
 }
