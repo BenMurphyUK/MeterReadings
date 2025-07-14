@@ -9,13 +9,16 @@ namespace MeterReadingsApi.Services
     {
         private readonly IAccountRepository _accountRepository;
         private readonly IMeterReadingRepository _meterReadingRepository;
+        private readonly ILogger<ValidationService> _logger;
 
         public ValidationService(
             IAccountRepository accountRepository,
-            IMeterReadingRepository meterReadingRepository)
+            IMeterReadingRepository meterReadingRepository,
+            ILogger<ValidationService> logger)
         {
             _accountRepository = accountRepository;
             _meterReadingRepository = meterReadingRepository;
+            _logger = logger;
         }
 
         public async Task<(bool IsValid, List<string> Errors)> ValidateAsync(MeterReadingDto meterReading)
@@ -56,20 +59,6 @@ namespace MeterReadingsApi.Services
             return await _meterReadingRepository.ExistsAsync(accountId, dateTime, value);
         }
 
-        public async Task<bool> IsReadingNewerThanExistingAsync(int accountId, DateTime dateTime)
-        {
-            var latestReading = await _meterReadingRepository.GetLatestByAccountAsync(accountId);
-
-            // If no existing reading, any new reading is valid
-            if (latestReading == null)
-            {
-                return true;
-            }
-
-            // New reading must be newer than the latest existing reading
-            return dateTime > latestReading.MeterReadingDateTime;
-        }
-
         public bool IsReadingValueValid(int readingValue)
         {
             // Check if value is within valid range (0-99999)
@@ -83,6 +72,20 @@ namespace MeterReadingsApi.Services
             // But I assume that this validation requirement means that the value should just be within the specified range.
 
             return true;
+        }
+
+        public async Task<bool> IsReadingNewerThanExistingAsync(int accountId, DateTime dateTime)
+        {
+            var latestReading = await _meterReadingRepository.GetLatestByAccountAsync(accountId);
+
+            // If no existing reading, any new reading is valid
+            if (latestReading == null)
+            {
+                return true;
+            }
+
+            // New reading must be newer than the latest existing reading
+            return dateTime > latestReading.MeterReadingDateTime;
         }
     }
 }
