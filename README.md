@@ -2,7 +2,7 @@
 
 ## Set up instructions
 
-Pull down the repo, open the solution in Visual Studio and run the project.
+Run the `MeterReadingsApi` project - this will launch the Swagger UI.
 
 The API uses an In Memory database that is seeded on launch with account data. 
 
@@ -16,6 +16,7 @@ The API uses an In Memory database that is seeded on launch with account data.
 - Better exception handling (improves security, do not show stack traces!)
 - Append "Utc" to DateTime references (variables, database fields, etc.) to ensure clarity on time zones
 - Github actions (CI/CD / Build&Release pipelines) to automate the deployment process and run tests
+- Relevant integration tests
 
 ### Assumptions Made
 
