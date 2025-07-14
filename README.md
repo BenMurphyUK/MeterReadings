@@ -15,6 +15,7 @@ The API uses an In Memory database that is seeded on launch with account data.
 - Unit tests
 - Better exception handling (improves security, do not show stack traces!)
 - Append "Utc" to DateTime references (variables, database fields, etc.) to ensure clarity on time zones
+- Github actions (CI/CD / Build&Release pipelines) to automate the deployment process and run tests
 
 ### Assumptions Made
 
