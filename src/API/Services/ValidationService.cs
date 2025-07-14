@@ -24,12 +24,12 @@ namespace MeterReadingsApi.Services
 
             if (!await IsAccountValidAsync(meterReading.AccountId))
             {
-                errors.Add($"Account ID {meterReading.AccountId} does not exist");
+                errors.Add($"An account with the ID {meterReading.AccountId} does not exist");
             }
 
             if (!IsReadingValueValid(meterReading.MeterReadValue))
             {
-                errors.Add($"Meter reading value {meterReading.MeterReadValue} is not in the correct format (NNNNN)");
+                errors.Add($"Meter reading value '{meterReading.MeterReadValue}' is not in the allowed range (0-99999)");
             }
 
             if (await IsDuplicateReadingAsync(meterReading.AccountId, meterReading.MeterReadingDateTime, meterReading.MeterReadValue))
