@@ -14,6 +14,7 @@ The API uses an In Memory database that is seeded on launch with account data.
 - Implement Clean Architecture design pattern (especially if the scope was bigger; to benefit from CQRS, Mediatr, FluentValidation)
 - Unit tests
 - Better exception handling (improves security, do not show stack traces!)
+- Append "Utc" to DateTime references (variables, database fields, etc.) to ensure clarity on time zones
 
 ### Assumptions Made
 
