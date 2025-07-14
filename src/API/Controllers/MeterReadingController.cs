@@ -28,12 +28,16 @@ namespace MeterReadingsApi.Controllers
             var validationResult = ValidateFile(file);
             if (!validationResult.IsValid)
             {
+                _logger.LogError("File validation failed: {Errors}", string.Join(", ", validationResult.Errors));
                 return BadRequest(new { errors = validationResult.Errors });
             }
 
             // Process the file
             using var stream = file.OpenReadStream();
             var result = await _meterReadingService.ProcessMeterReadingsAsync(stream);
+
+            _logger.LogInformation("Completed processing. Successful: {Successful}, Failed: {Failed}",
+                result.SuccessfulReadingsCount, result.FailedReadingsCount);
 
             return Ok(result);
         }

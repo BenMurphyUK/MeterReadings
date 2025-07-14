@@ -11,6 +11,7 @@ namespace MeterReadingsApi.Services
         private readonly ICsvParserService _csvParserService;
         private readonly IValidationService _validationService;
         private readonly IMeterReadingRepository _meterReadingRepository;
+        private readonly ILogger<MeterReadingService> _logger;
 
         public MeterReadingService(
             ICsvParserService csvParserService,
@@ -21,6 +22,7 @@ namespace MeterReadingsApi.Services
             _csvParserService = csvParserService;
             _validationService = validationService;
             _meterReadingRepository = meterReadingRepository;
+            _logger = logger;
         }
 
         public async Task<MeterReadingUploadResponse> ProcessMeterReadingsAsync(Stream csvStream)
@@ -29,6 +31,7 @@ namespace MeterReadingsApi.Services
 
             // Parse CSV
             var meterReadingDtos = await _csvParserService.ParseCsvAsync(csvStream);
+            _logger.LogInformation("Starting to process meter readings CSV");
 
             var validReadings = new List<MeterReading>();
 
@@ -65,6 +68,8 @@ namespace MeterReadingsApi.Services
                 _meterReadingRepository.AddRange(validReadings);
                 await _meterReadingRepository.SaveChangesAsync();
             }
+
+            _logger.LogInformation("Successfully saved {Count} meter readings", validReadings.Count);
 
             return response;
         }
