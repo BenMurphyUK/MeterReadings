@@ -1,11 +1,9 @@
-﻿using FluentAssertions;
-using MeterReadingsApi.Data.Entities;
+﻿using MeterReadingsApi.Data.Entities;
 using MeterReadingsApi.Data.Repositories.Interfaces;
 using MeterReadingsApi.Models.Dtos;
 using MeterReadingsApi.Services;
 using MeterReadingsApi.Services.Interfaces;
 using Microsoft.Extensions.Logging;
-using Moq;
 using System.Text;
 
 namespace MeterReadingsApi.UnitTests.Services

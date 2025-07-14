@@ -1,7 +1,5 @@
-﻿using FluentAssertions;
-using MeterReadingsApi.Services;
+﻿using MeterReadingsApi.Services;
 using Microsoft.Extensions.Logging;
-using Moq;
 using System.Text;
 
 namespace MeterReadingsApi.UnitTests.Services

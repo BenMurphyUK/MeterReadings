@@ -9,16 +9,20 @@ namespace MeterReadingsApi.Controllers
     public class MeterReadingController : ControllerBase
     {
         private readonly IMeterReadingService _meterReadingService;
+        private readonly ILogger<MeterReadingController> _logger;
 
-        public MeterReadingController(IMeterReadingService meterReadingService)
+        public MeterReadingController(
+            IMeterReadingService meterReadingService,
+            ILogger<MeterReadingController> logger)
         {
             _meterReadingService = meterReadingService;
+            _logger = logger;
         }
 
         [HttpPost("meter-reading-uploads")]
         [ProducesResponseType(typeof(MeterReadingUploadResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UploadMeterReadings(IFormFile file)
+        public async Task<ActionResult<MeterReadingUploadResponse>> UploadMeterReadings(IFormFile file)
         {
             // Validate file
             var validationResult = ValidateFile(file);
