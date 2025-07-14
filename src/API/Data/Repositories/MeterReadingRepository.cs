@@ -13,17 +13,11 @@ namespace MeterReadingsApi.Data.Repositories
             _context = context;
         }
 
-        public async Task<MeterReading?> GetByAccountAndDateTimeAsync(int accountId, DateTime dateTime)
-        {
-            return await _context.MeterReadings
-                .FirstOrDefaultAsync(x => x.AccountId == accountId && x.MeterReadingDateTimeUtc == dateTime);
-        }
-
         public async Task<bool> ExistsAsync(int accountId, DateTime dateTime, int value)
         {
             return await _context.MeterReadings
                 .AnyAsync(x => x.AccountId == accountId 
-                    && x.MeterReadingDateTimeUtc == dateTime 
+                    && x.MeterReadingDateTime == dateTime 
                     && x.MeterReadValue == value);
         }
 
@@ -31,13 +25,8 @@ namespace MeterReadingsApi.Data.Repositories
         {
             return await _context.MeterReadings
                 .Where(x => x.AccountId == accountId)
-                .OrderByDescending(x => x.MeterReadingDateTimeUtc)
+                .OrderByDescending(x => x.MeterReadingDateTime)
                 .FirstOrDefaultAsync();
-        }
-
-        public void Add(MeterReading meterReading)
-        {
-            _context.MeterReadings.Add(meterReading);
         }
 
         public void AddRange(List<MeterReading> meterReadings)
