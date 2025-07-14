@@ -6,7 +6,7 @@
 
         public virtual Account Account { get; set; } = null!;
 
-        public DateTime MeterReadingDateTimeUtc { get; set; }
+        public DateTime MeterReadingDateTime { get; set; }
 
         public int MeterReadValue { get; set; }
     }

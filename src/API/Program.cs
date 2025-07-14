@@ -1,4 +1,5 @@
 using MeterReadingsApi.Data;
+using MeterReadingsApi.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<MeterReadingsDbContext>(opt =>
     opt.UseInMemoryDatabase("MeterReadings"));
+
+builder.Services.AddApplicationServices();
+builder.Services.AddRepositories();
 
 var app = builder.Build();
 
@@ -27,5 +31,19 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+// Ensure database is created and seeded
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<MeterReadingsDbContext>();
+
+    if (!context.Accounts.Any())
+    {
+        var seedAccounts = MeterReadingsDbContext.GetSeedAccountsTestData();
+        // Seed initial data if Accounts table is empty
+        context.Accounts.AddRange(seedAccounts);
+        context.SaveChanges();
+    }
+}
 
 app.Run();

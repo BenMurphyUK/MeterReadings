@@ -15,7 +15,7 @@ namespace MeterReadingsApi.Data.Configurations
             builder.HasKey(x => x.Id);
 
             // Column properties
-            builder.Property(x => x.MeterReadingDateTimeUtc)
+            builder.Property(x => x.MeterReadingDateTime)
                 .IsRequired()
                 .HasColumnType("datetime2");
 
