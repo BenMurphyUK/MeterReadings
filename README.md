@@ -31,6 +31,6 @@ The API uses an In Memory database that is seeded on launch with account data.
 - N-tier architecture is used for speed, but with flavours of Clean Architecture (specifically separation of concerns)
 - Entity Framework Core is used with proper configurations and repositories
   - InMemory database is used for ease of set up with a code first solution (benefits from being easier to track with the DB schema being in source control)
-- Ensure to use async/await to allow for non-block procedures
+- Ensure to use async/await to allow for non-blocking procedures
 - Business logic & validation
   - All validation rules from the spec are implemented, and there is validation and multiple levels (controller, service, database) 
