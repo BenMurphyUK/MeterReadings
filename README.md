@@ -12,7 +12,6 @@ The API uses an In Memory database that is seeded on launch with account data.
 - More & better logging throughout (eventually integration with Application Insights / CloudWatch)
 - Use Scalar over Swagger
 - Implement Clean Architecture design pattern (especially if the scope was bigger; to benefit from CQRS, Mediatr, FluentValidation)
-- Unit tests
 - Better exception handling (improves security, do not show stack traces!)
 - Append "Utc" to DateTime references (variables, database fields, etc.) to ensure clarity on time zones
 - Github actions (CI/CD / Build&Release pipelines) to automate the deployment process and run tests
